@@ -25,6 +25,7 @@
 #include "cli.h"
 
 #ifdef _WIN32
+#include <windows.h>
 #include <io.h>
 #endif
 
@@ -340,6 +341,10 @@ static int process_command(struct command *cmd, int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	conv_cmdline_utf8(&argc, &argv);
+#ifdef _WIN32
+	SetConsoleOutputCP(CP_UTF8);
+#endif
+
 	if (argc < 2) {
 		print_usage(&cmd_alice);
 		exit(0);
